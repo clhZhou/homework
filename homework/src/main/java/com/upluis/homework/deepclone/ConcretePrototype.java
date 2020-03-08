@@ -1,0 +1,74 @@
+package com.upluis.homework.deepclone;
+
+
+import com.alibaba.fastjson.JSON;
+import lombok.Data;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author luis
+ * @date 2020/3/1
+ */
+@Data
+public class ConcretePrototype implements Cloneable,Serializable {
+
+    private int age;
+    private String name;
+    private List<String> hobbies;
+
+    @Override
+    public ConcretePrototype clone() {
+        try {
+            return (ConcretePrototype)super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ConcretePrototype deepCloneHobbies(){
+        try {
+            ConcretePrototype result = (ConcretePrototype)super.clone();
+            result.hobbies = (List)((ArrayList)result.hobbies).clone();
+            return result;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ConcretePrototype deepClone(){
+        try {
+//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//            ObjectOutputStream oos = new ObjectOutputStream(bos);
+//            oos.writeObject(this);
+//
+//            ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+//            ObjectInputStream ois = new ObjectInputStream(bis);
+//
+//            return (ConcretePrototype)ois.readObject();
+
+            String jsonString = JSON.toJSONString(this);
+            ConcretePrototype cp = JSON.parseObject(jsonString, ConcretePrototype.class);
+            return  cp;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    @Override
+    public String toString() {
+        return "ConcretePrototype{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", hobbies=" + hobbies +
+                '}';
+    }
+}
