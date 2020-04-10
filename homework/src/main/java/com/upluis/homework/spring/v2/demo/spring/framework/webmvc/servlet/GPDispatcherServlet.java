@@ -21,10 +21,14 @@ import java.util.*;
  * Created by Tom.
  */
 public class GPDispatcherServlet extends HttpServlet {
+
     private GPApplicationContext applicationContext;
 
 
     //IoC容器，key默认是类名首字母小写，value就是对应的实例对象
+    /**
+     *
+     */
     private Map<String,Object> ioc = new HashMap<String,Object>();
 
     private Map<String,Method> handlerMapping = new HashMap<String, Method>();
